@@ -62,25 +62,25 @@ Unfortunately these guarantees only hold if the underlying network is well-conne
 do not hold in adversarial environments~\cite{apostolaki16hijacking, gervais15tampering, heilman15eclipse}.
 The underlying problem which enables these attacks is that first generation blockchain protocols do not consider finality (i.e., when will a block never be reverted) as a first class property, prioritising liveness instead.
 
-An alternative to probabilistic finality is having \emph{provable finality} where anyone can be convinced of the finality of a block, regardless of being a consensus participants or actively following the network.% Provable fnality can be reached for example, a signed statement by a set of authorities, the set of whom can be tracked, that the block is final.
+An alternative to probabilistic finality is having \emph{provable finality} where anyone can be convinced of the finality of a block, regardless of being a consensus participants or actively following the network.% Provable finality can be reached for example, a signed statement by a set of authorities, the set of whom can be tracked, that the block is final.
 %This is useful to prove what happened to light clients, who do not have the full chain or are not actively listening to the network, and to communicate with other chains, possibly as part of a scalability solution, where not anyone receives or stores all the data in the system.
-New generation protocols~\cite{kokoris16enhancing,decker16bitcoin,pass16hybrid} propose the complete opposite. They propose every block to be finalized one by one and to forfeit liveness when finality is not readily achievable. This gives provable finality immediately.% However this is slow if we have a large set of participants in the Byzantine agreement.
+New generation protocols~\cite{kokoris16enhancing,decker16bitcoin,pass16hybrid} propose the complete opposite. They propose every block to be finalised one by one and to forfeit liveness when finality is not readily achievable. This gives provable finality immediately.% However this is slow if we have a large set of participants in the Byzantine agreement.
 Unfortunately, these types of protocols inherit the shortcoming of classic consensus protocol on losing performance when many nodes are required to participate. Hence, they need to put a limit on the number of consensus participants which might lead to centralization. 
 
 %Secondly, tying consensus with liveness of the chain means that there is no optimism and blocks are committed only when all verification information are available. As a result, they lose the ability to make some (unsafe) progress when the network is unstable, which can help speedup the recovery process when the network heals. 
 
 
 In this work we show the that the middle ground also merits exploration. The approach that we will take is similar to the approach that Ethereum plans to take with Casper the Friendly Finality Gadget (Casper FFG)[2].
-We introduces and formalize the idea of lazy finality which is encapsulated in the abstraction of a \emph{finality gadget.} Separating the liveness of the consensus protocol from the finality of the blocks. This approach has three concrete benefits for the overlying blockchain protocol. 
+We introduces and formalise the idea of lazy finality which is encapsulated in the abstraction of a \emph{finality gadget.} Separating the liveness of the consensus protocol from the finality of the blocks. This approach has three concrete benefits for the overlying blockchain protocol. 
 
 %We will use a block production mechanism and chain selection rule that give eventual consensus and then add a finality gadget, a protocol that finalises blocks that the participants already agree on, to get provable finality.
 
-A first benefit is that since consensus is not tied to liveness of the chain we can have optimistic execution.  As a result, the chain can grow before it is certain that blocks are valid. Later on, we can finalize blocks when we are sure they are correct i.e., all verification information is available. 
-A second benefit is that we can make some (unsafe) progress when the network is unstable. This enables a fast recovery process when the network heals. Similarly, we can make progress in chain growth even when finlzation is slow, e.g., when we have many particiapnts thus promoting decentenralization. 
+A first benefit is that since consensus is not tied to liveness of the chain we can have optimistic execution.  As a result, the chain can grow before it is certain that blocks are valid. Later on, we can finalise blocks when we are sure they are correct i.e., all verification information is available. 
+A second benefit is that we can make some (unsafe) progress when the network is unstable. This enables a fast recovery process when the network heals. Similarly, we can make progress in chain growth even when finalization is slow, e.g., when we have many participants thus promoting decentralization. 
 
 %First, not every node that is competing to mine a block needs to be part of the finality gadget, hence we can get the \textit{best of both worlds} (i.e., full inclusive decentralization and scalable fast finality). 
 
-%Second, we can reorganize the chain for blocks that have not yet been finalized \xxx{Al put a sentence on why this is a cool property.}. 
+%Second, we can reorganize the chain for blocks that have not yet been finalised \xxx{Al put a sentence on why this is a cool property.}. 
 
 Third, a finality gadget can be deployed gradually and light clients can choose to consult it or follow the longest chain rule and ignore it, enabling light client heterogeneity. 
 The light client that trust the gadget do not need to have the full chain or actively listen to the network. 
@@ -88,11 +88,11 @@ This can in turn enable scalability~\cite{avarikioti19divide} in an ecosystem of
 
 %Finally, the finality gadget protocol is simpler than consensus protocols since they do not require a complex and costly view change phase.
 
-In short, we fromalize the abstraction of a \emph{finality gadget} that runs along any block production mechanism (e.g., Nakamoto consensus) providing provable finality guarantees. We show that it is impossible to satisfy its properties with a deterministic asynchronous protocol. To circumvent this impossibility result, we introduce the GRANDPA finality gadget that works in a partially synchronous network model, in the presence of up to $1/3$ Byzantine actors. 
+In short, we formalise the abstraction of a \emph{finality gadget} that runs along any block production mechanism (e.g., Nakamoto consensus) providing provable finality guarantees. We show that it is impossible to satisfy its properties with a deterministic asynchronous protocol. To circumvent this impossibility result, we introduce the GRANDPA finality gadget that works in a partially synchronous network model, in the presence of up to $1/3$ Byzantine actors. 
 %To this end we formalise the finality gadget problem and 
  
 
-The combination of GRANDPA with a classic block production mechanism like GHOST~\cite{lewenberg15inclusive} results in the existing deployment of the polkadot network \footnote{\url{https://polkadot.network}} which provides fast finality under good network conditions and protects the clients without compromising the liveness when under attack. The implementation of GRANDPA is available on github \footnote{See \url{https://github.com/paritytech/finality-grandpa} and \url{https://github.com/paritytech/substrate/tree/master/client/finality-grandpa}}.
+The combination of GRANDPA with a classic block production mechanism like GHOST~\cite{lewenberg15inclusive} results in the existing deployment of the Polkadot network \footnote{\url{https://polkadot.network}} which provides fast finality under good network conditions and protects the clients without compromising the liveness when under attack. The implementation of GRANDPA is available on github \footnote{See \url{https://github.com/paritytech/finality-grandpa} and \url{https://github.com/paritytech/substrate/tree/master/client/finality-grandpa}}.
 
 
 In summary we make the following contributions:
@@ -354,7 +354,7 @@ Any honest voter only votes in round $r$ for chains containing their estimate $E
 In order to find a solution to the finality gadget protocol we look in
 consensus protocols that solve the stronger problem as described in the previous section. The key idea for our solution is to inherit the safety properties of a consensus protocol, but use the underlying blockchain as the driving force of liveness. This results in a protocol which does not stop when for example the network is split. 
 Instead, only the finalization stops, but the blocks keep getting created and propagated to everyone.
-This means that when the conditions are safe again, the finality gadget only needs to finalize the head of the chain\footnote{Which the oracle will return quickly to a supermajority of miners.},
+This means that when the conditions are safe again, the finality gadget only needs to finalise the head of the chain\footnote{Which the oracle will return quickly to a supermajority of miners.},
 instead of having to transmit and run consensus on every block. 
 %In Figure~\ref{fig:finality}, we analyze the differences between classic blockchain protocols~\cite{nakamoto08bitcoin,wood14ethereum}, finality gadget, and hybrid consensus solutions~\cite{kokoris16enhancing,gilad17algorand}
 %\xxx{Experiment: Catchup 100s of blocks Hotstuff vs GRANDPA}.
@@ -367,8 +367,8 @@ instead of having to transmit and run consensus on every block.
 In this section, we give our solution to the Byzantine finality gadget problem, GRANDPA.  Our finality gadget works the partially synchronous setting, we also provide a fully asynchronous solution in Appendix~\ref{app:async}.
 
 GRANDPA works in rounds, each round has a set of $3f+1$ eligible voters, $2f+1$ of which are assumed honest. Furthermore, we assume that each round has a participant designated as primary and all participants agree on the voter sets and primary. We will can either choose the primary pseudorandomly from or rotate through the voter set.
-On a high-level, each round consists of a double-echo protocol after which every party waits in order to detect whether we can finalize a block in this round (this block does not need to be the immediate ancestor of the last finalized block, it might be far ahead from the last finalized block). If the round is unsuccessful, the parties simply move on to the next round with a new primary. When a good primary is selected, the oracle is consistent (returns the same value to all honest parties),
-and the network is in synchrony (after $\GST$), then a new block will be finalized and it will transitively finalized all its ancestors.
+On a high-level, each round consists of a double-echo protocol after which every party waits in order to detect whether we can finalise a block in this round (this block does not need to be the immediate ancestor of the last finalised block, it might be far ahead from the last finalised block). If the round is unsuccessful, the parties simply move on to the next round with a new primary. When a good primary is selected, the oracle is consistent (returns the same value to all honest parties),
+and the network is in synchrony (after $\GST$), then a new block will be finalised and it will transitively finalised all its ancestors.
 
 More specifically, we let $V_{r,v}$ and $C_{r,v}$ be the sets of prevotes and precommits respectively received by $v$ from round $r$ at the current time.
 
