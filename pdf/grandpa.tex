@@ -84,7 +84,7 @@ A second benefit is that we can make some (unsafe) progress when the network is 
 
 Third, a finality gadget can be deployed gradually and light clients can choose to consult it or follow the longest chain rule and ignore it, enabling light client heterogeneity. 
 The light client that trust the gadget do not need to have the full chain or actively listen to the network. 
-This can in turn enable scalability~\cite{avarikioti19divide} in an ecosystem of multiple chains (weather sharding~\cite{kokoris17omniledger,al18chainspace,androulaki18channels} or heterogeneous~\cite{zamyatin19sok}), where no single party receives or stores all the data in the system. 
+This can in turn enable scalability~\cite{avarikioti19divide} in an ecosystem of multiple chains (whether sharding~\cite{kokoris17omniledger,al18chainspace,androulaki18channels} or heterogeneous~\cite{zamyatin19sok}), where no single party receives or stores all the data in the system. 
 
 %Finally, the finality gadget protocol is simpler than consensus protocols since they do not require a complex and costly view change phase.
 
@@ -153,7 +153,7 @@ We say an oracle $A$ in a protocol is {\em eventually consistent} if it returns 
 
 \paragraph{Impossibility of Deterministic Agreement with an Oracle.}\label{ssec:impossibility}
 %\xxx{Al can you extend this?}
-For the binary case, i.e. when $|S|=2$, the Byzantine finality gadget problem is reducible to Byzantine agreement. This does not hold for $|S| > 2$, because the definition of validity is stronger in our protocol. Note that it is impossible for multi-valued Byzantine agreement to make the validity condition require that we decide an initial value of some honest voter and tolerate more than a $1/|S|$ fraction of faults, since we may have a $1/|S|$ fraction of voters reporting each initial value and Byzantine voters can act honestly enough not to be detectable. For finality gadgets, this stronger validity condition is possible. A natural question is then weather the celebrated FLP~\cite{flp} impossibility holds for our stronger requirements.
+For the binary case, i.e. when $|S|=2$, the Byzantine finality gadget problem is reducible to Byzantine agreement. This does not hold for $|S| > 2$, because the definition of validity is stronger in our protocol. Note that it is impossible for multi-valued Byzantine agreement to make the validity condition require that we decide an initial value of some honest voter and tolerate more than a $1/|S|$ fraction of faults, since we may have a $1/|S|$ fraction of voters reporting each initial value and Byzantine voters can act honestly enough not to be detectable. For finality gadgets, this stronger validity condition is possible. A natural question is then whether the celebrated FLP~\cite{flp} impossibility holds for our stronger requirements.
 Next, we show that an asynchronous, deterministic binary finality gadget is impossible, even with one fault. 
 This means that the extra information voters have here, that $A$ will eventually agree for all voters, is not enough to make this possible.
 
